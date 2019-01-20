@@ -2,7 +2,8 @@
 import { EventEmitter } from '@angular/core'; 
 
 export class VoteComponent { 
-  totalVotes = 0; 
+  totalVotes = 0;
+  // often used as @Output if have template 
   voteChanged = new EventEmitter();
 
   upVote() { 
