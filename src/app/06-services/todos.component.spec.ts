@@ -1,6 +1,6 @@
 import { TodosComponent } from './todos.component'; 
 import { TodoService } from './todo.service'; 
-import { Observable, of, empty, throwError } from 'rxjs';
+import { Observable, of, empty, throwError, EMPTY } from 'rxjs';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
@@ -69,5 +69,25 @@ describe('TodosComponent', () => {
     // console.log('component: ' + JSON.stringify(component));
 
     expect(component.message).toBe(error);
+  })
+
+  // test delete
+  it('should call the server to delete a todo item if the user confirms', () => {
+    spyOn(window, 'confirm').and.returnValue(true);
+    let spy = spyOn(service, 'delete').and.returnValue(EMPTY);
+
+    component.delete(1);
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(1); // more specific
+  })
+
+  it('should NOT call the server to delete a todo item if the user cancels', () => {
+    spyOn(window, 'confirm').and.returnValue(false);
+    let spy = spyOn(service, 'delete').and.returnValue(EMPTY);
+
+    component.delete(1);
+
+    expect(spy).not.toHaveBeenCalled();
   })
 });
