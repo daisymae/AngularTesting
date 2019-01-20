@@ -74,7 +74,7 @@ describe('TodosComponent', () => {
   // test delete
   // adding 'x' in front of the test will cause the test to be skipped
   // similarly, adding 'x' in front of the suite will cause all the tests to be skipped
-  xit('should call the server to delete a todo item if the user confirms', () => {
+  it('should call the server to delete a todo item if the user confirms', () => {
     spyOn(window, 'confirm').and.returnValue(true);
     let spy = spyOn(service, 'delete').and.returnValue(EMPTY);
 
@@ -84,7 +84,7 @@ describe('TodosComponent', () => {
     expect(spy).toHaveBeenCalledWith(1); // more specific
   })
 
-  xit('should NOT call the server to delete a todo item if the user cancels', () => {
+  it('should NOT call the server to delete a todo item if the user cancels', () => {
     spyOn(window, 'confirm').and.returnValue(false);
     let spy = spyOn(service, 'delete').and.returnValue(EMPTY);
 
