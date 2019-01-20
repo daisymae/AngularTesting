@@ -10,7 +10,7 @@ export class UserService {
 	}
 
 	getUsers(){
-		return this._http.get(this._url)
+		return this._http.get<any[]>(this._url)
 			.pipe(map(res => res));
 	}
     

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { UserService }       from './user.service';
+import { map } from 'rxjs/operators';
 
 export class UsersComponent implements OnInit {
   users: any[];
@@ -8,7 +9,7 @@ export class UsersComponent implements OnInit {
   constructor(private _service: UserService) {	}
 
 	ngOnInit() {
-		this._service.getUsers().subscribe(users => this.users = users);
+    this._service.getUsers().pipe(map(users => this.users = users)).subscribe();
 	} 
     
   deleteUser(user) {
