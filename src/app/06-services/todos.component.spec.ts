@@ -1,6 +1,6 @@
 import { TodosComponent } from './todos.component'; 
 import { TodoService } from './todo.service'; 
-import { Observable, of } from 'rxjs';
+import { Observable, of, empty, throwError } from 'rxjs';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
@@ -31,4 +31,43 @@ describe('TodosComponent', () => {
     expect(component.todos.length).toBe(3); // a little more specific, but still doesn't validate the values
     expect(component.todos).toBe(todos); // very specific
   });
+
+  // need 3 tests for the add function:
+  // 1. make sure service.add is called
+  // 2. make sure todo is added to our todos array
+  // 3. in case of error, make sure error returned
+
+  it('should call the server to save the changes when a new todo item is added', () => {
+    let spy = spyOn(service, 'add').and.callFake((t => {
+      return empty();
+    }));
+
+    component.add();
+
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should add the new todo returned from the server', () => {
+    let todo = {id: 1};
+    // another way to handle spyOn instead of an => function
+    let spy = spyOn(service, 'add').and.returnValue(of(todo));
+    
+    component.add();
+
+    // console.log('component: ' + JSON.stringify(component));
+
+    expect(component.todos.indexOf(todo)).toBeGreaterThan(-1);
+  })
+
+  it('should set the message property if server returns an error when adding a new todo', () => {
+    let error = 'error from the server';
+    // another way to handle spyOn instead of an => function
+    let spy = spyOn(service, 'add').and.returnValue(throwError(error));
+    
+    component.add();
+
+    // console.log('component: ' + JSON.stringify(component));
+
+    expect(component.message).toBe(error);
+  })
 });
