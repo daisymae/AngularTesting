@@ -1,5 +1,6 @@
 
 import { TodoService } from './todo.service'
+import { map } from 'rxjs/operators';
 
 export class TodosComponent { 
   todos: any[] = [];
@@ -8,7 +9,7 @@ export class TodosComponent {
   constructor(private service: TodoService) {}
 
   ngOnInit() { 
-    this.service.getTodos().subscribe(t => this.todos = t);
+    this.service.getTodos().pipe(map(t => this.todos = t)).subscribe();
   }
 
   add() { 
