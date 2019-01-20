@@ -1,6 +1,6 @@
 import { TodosComponent } from './todos.component'; 
 import { TodoService } from './todo.service'; 
-import { Observable, of, empty, throwError, EMPTY } from 'rxjs';
+import { of, empty, throwError, EMPTY } from 'rxjs';
 
 describe('TodosComponent', () => {
   let component: TodosComponent;
